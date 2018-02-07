@@ -2,10 +2,13 @@ package edu.temple.signupform;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.logging.Logger;
 
 public class FormActivity extends AppCompatActivity {
 
@@ -23,17 +26,18 @@ public class FormActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean validName = !nameField.getText().equals("");
-                boolean validEmail = isEmailValid(emailField.getText());
-                boolean validPassword = passwordField.getText().equals(confirmPasswordField.getText());
+                boolean validName = !nameField.getText().toString().equals("");
+                boolean validEmail = isEmailValid(emailField.getText().toString());
+                boolean validPassword = passwordField.getText().toString().equals(confirmPasswordField.getText().toString());
+
 
                 //Invalid name, email, or missing password.
-                if(!validName || !validEmail || passwordField.getText().equals("")){
+                if(!validName || !validEmail || passwordField.getText().toString().equals("")){
                     Toast.makeText(FormActivity.this,
-                            "Please enter all information.", Toast.LENGTH_LONG).show();
+                            "Please enter all information and enter a valid email address.", Toast.LENGTH_LONG).show();
                 }
                 //If passwords dont match
-                else if(validPassword){
+                else if(!validPassword){
                     Toast.makeText(FormActivity.this, "Please ensure that password and " +
                             "confirm password are the same.", Toast.LENGTH_LONG).show();
                 }
@@ -41,7 +45,6 @@ public class FormActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(FormActivity.this,
                             "Your data has been saved. Congrats!", Toast.LENGTH_LONG).show();
-
                 }
             }
         });
